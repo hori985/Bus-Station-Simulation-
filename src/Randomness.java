@@ -1,4 +1,4 @@
-package busStation;
+package station.bus;
 
 public class Randomness {
 	
@@ -43,3 +43,4 @@ public class Randomness {
 	}
 	
 }
+
