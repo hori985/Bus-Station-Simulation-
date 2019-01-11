@@ -10,13 +10,19 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+
 import javax.swing.border.BevelBorder;
+import javax.swing.JTextField;
 
 
 public class GUI {
 
-	JFrame frame;
-
+	public JFrame frame;
+	public JTextArea timeArea;
+	public JTextArea textArea; //Event
+	public int time;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -33,6 +39,8 @@ public class GUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		time = 0;
+		
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 533, 386);
@@ -44,16 +52,16 @@ public class GUI {
 		btnNewButton.setBounds(10, 301, 151, 35);
 		frame.getContentPane().add(btnNewButton);
 		
+		
 		JButton button = new JButton("Wave at Bus Driver");
 		button.setBounds(10, 255, 151, 35);
 		frame.getContentPane().add(button);
 		
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		scrollPane.setBounds(171, 209, 346, 127);
 		frame.getContentPane().add(scrollPane);
-		textArea.setText("Maria\n\n\n\n\n\n\n\n\n\n\n\n\nSara");
 		
 		
 		JButton button_1 = new JButton("Control Tickets");
@@ -62,7 +70,7 @@ public class GUI {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.BLACK, null, null, null));
-		panel.setBounds(10, 11, 495, 187);
+		panel.setBounds(10, 11, 494, 187);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -92,5 +100,19 @@ public class GUI {
 		textArea_2.setText("Bus2");
 		panel_3.setBackground(Color.yellow);
 		
+		timeArea = new JTextArea();
+		timeArea.setBounds(366, 11, 116, 44);
+		timeArea.setBackground(new Color(240, 240, 240));
+		panel.add(timeArea);
+		
+	
+		ActionListener timeButtonPressed = new TimeController(this.timeArea, this.time);
+		btnNewButton.addActionListener(timeButtonPressed);
+		
+		ActionListener waveButtonPressed = new WaveController(this.textArea);
+		button.addActionListener(waveButtonPressed);
+		
+		ActionListener ticketButtonPressed = new TicketController(this.textArea);
+		button_1.addActionListener(ticketButtonPressed);
 	}
 }

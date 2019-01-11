@@ -36,11 +36,24 @@ public class Randomness {
 		if(Meri > 0.6f){ return timeScheduled + (int)(Math.random() * 8); }
 		else { return timeScheduled - (int)(Math.random() * 8); }
 	}
-
-	static int generateImageNR()
+	
+	static boolean waveBack()
 	{
-		return (int)(Math.random() * 10);
+		if(Math.random() > 0.65f) { return true; }
+		else { return false; }
 	}
 	
+	static int fineBus(int nr) {	
+		switch((int)(Math.random() * 2)) {
+		case 0:
+			return (int)(nr*0.1);
+		case 1:
+			return (int)(nr*0.2);
+		case 2:
+			return (int)(nr*0.4);
+		default:
+			return 0;
+		}
+	}
 }
 
