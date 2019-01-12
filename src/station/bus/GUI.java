@@ -1,6 +1,7 @@
 package station.bus;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -15,6 +16,8 @@ import java.awt.event.ActionListener;
 import javax.swing.border.BevelBorder;
 import javax.swing.JTextField;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class GUI {
 
@@ -22,7 +25,12 @@ public class GUI {
 	public JTextArea timeArea;
 	public JTextArea textArea; //Event
 	public int time;
-	
+	public JTextField textArea_1;
+	public JTextField textArea_2;
+	private Comparator<Bus> comparator;
+	public PriorityQueue<Bus> busses;
+	public JPanel panel_2;
+	public JPanel panel_3;
 	/**
 	 * Launch the application.
 	 */
@@ -40,6 +48,10 @@ public class GUI {
 	 */
 	private void initialize() {
 		time = 0;
+		
+		this.comparator = new BusComparator();
+		this.busses=new PriorityQueue<>(10, comparator); 	//Our city is poor and can only afford 10 busses max!
+		this.fillBusses();
 		
 		frame = new JFrame();
 		frame.setResizable(false);
@@ -79,26 +91,28 @@ public class GUI {
 		panel_1.setBounds(157, 85, 181, 10);
 		panel.add(panel_1);
 		
-		JPanel panel_2 = new JPanel();
+		panel_2 = new JPanel();
 		panel_2.setBounds(157, 11, 181, 52);
 		panel.add(panel_2);
 		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JTextArea textArea_1 = new JTextArea();
+		textArea_1 = new JTextField();
 		panel_2.add(textArea_1);
-		textArea_1.setText("Bus1");
+		textArea_1.setText("Empty");
 		panel_2.setBackground(Color.yellow);
+		panel_2.setVisible(false);
 		
-		JPanel panel_3 = new JPanel();
+		panel_3 = new JPanel();
 		panel_3.setBounds(157, 112, 181, 52);
 		panel.add(panel_3);
 		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		
-		JTextArea textArea_2 = new JTextArea();
+		textArea_2 = new JTextField();
 		panel_3.add(textArea_2);
-		textArea_2.setText("Bus2");
+		textArea_2.setText("Empty");
 		panel_3.setBackground(Color.yellow);
+		panel_3.setVisible(false);
 		
 		timeArea = new JTextArea();
 		timeArea.setBounds(366, 11, 116, 44);
@@ -106,13 +120,21 @@ public class GUI {
 		panel.add(timeArea);
 		
 	
-		ActionListener timeButtonPressed = new TimeController(this.timeArea, this.time);
+		ActionListener timeButtonPressed = new TimeController(this.timeArea, this.time, this.busses,
+				this.panel_2,this.panel_3, this.textArea_1,this.textArea_2,this.textArea);
 		btnNewButton.addActionListener(timeButtonPressed);
 		
-		ActionListener waveButtonPressed = new WaveController(this.textArea);
+		ActionListener waveButtonPressed = new WaveController(this.textArea,this.textArea_1);
 		button.addActionListener(waveButtonPressed);
 		
-		ActionListener ticketButtonPressed = new TicketController(this.textArea);
+		ActionListener ticketButtonPressed = new TicketController(this.textArea,this.textArea_1,this.textArea_2);
 		button_1.addActionListener(ticketButtonPressed);
 	}
+	
+	private void fillBusses() {
+		for(int i=0;i<8;i++) {
+		this.busses.add(new Bus());
+		}
+	}
+	
 }

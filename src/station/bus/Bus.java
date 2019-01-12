@@ -1,5 +1,7 @@
 package station.bus;
 
+import java.util.Comparator;
+
 public class Bus {
 	private int passangerNr;
 	private int timeToStation, timeScheduled;
@@ -20,6 +22,7 @@ public class Bus {
 	
 	public void leaveStation() {
 		this.setPassangerNr();
+		this.setTimeScheduled();
 		this.setTimeToStation();
 	}
 	
@@ -52,6 +55,11 @@ public class Bus {
 		return id;
 	}
 
+}
 
+class BusComparator implements Comparator<Bus>{
+	public int compare(Bus arg0, Bus arg1) {
+		return (arg0.getTimeToStation() - arg1.getTimeToStation());
+	}
 	
 }
