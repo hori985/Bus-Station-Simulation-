@@ -57,19 +57,25 @@ class TimeController implements ActionListener{
 		
 		if(this.busses.peek().getTimeToStation()==this.timeValue) {
 			B.b1=this.busses.poll();
+			int late = B.b1.getTimeToStation() - B.b1.getTimeScheduled();
 			this.field1.setText(B.b1.getID());
 			this.bus1.setVisible(true);
 			B.b1.leaveStation();
 			this.busses.add(B.b1);
-			this.events.append("Bus "+this.field1.getText()+" has entered the station.\n");
+			
+			if(late < 0)this.events.append("Bus "+this.field1.getText()+" has entered the station "+ (-1)*late + " minutes early.\n");
+			else this.events.append("Bus "+this.field1.getText()+" has entered the station "+ late + " minutes late.\n");
 		}
 		if(this.busses.peek().getTimeToStation()==this.timeValue) {
 			B.b2=this.busses.poll();
+			int late = B.b2.getTimeToStation() - B.b2.getTimeScheduled();
 			this.field2.setText(B.b2.getID());
 			this.bus2.setVisible(true);
 			B.b2.leaveStation();
 			this.busses.add(B.b2);
-			this.events.append("Bus "+this.field2.getText()+" has entered the station.\n");
+
+			if(late < 0)this.events.append("Bus "+this.field2.getText()+" has entered the station "+ (-1)*late + " minutes early.\n");
+			else this.events.append("Bus "+this.field2.getText()+" has entered the station "+ late + " minutes late.\n");
 		}
 		
 		
@@ -94,7 +100,7 @@ class WaveController implements ActionListener{
 	public void actionPerformed(ActionEvent wave) {
 		if(this.isBus.getText().equals("Empty")==false) {
 		if(Randomness.waveBack()) this.wave.append("The bus driver waved back! :)\n");
-		else this.wave.append("The bus driver showed you the middle finger!\n"); //FINAL DECISION DO NOT CHANGE
+		else this.wave.append("The bus driver ignored you.\n"); //FINAL DECISION DO NOT CHANGE
 		}
 		else
 			this.wave.append("You wave at nothing, everybody stares at you like you're crazy.\n");
